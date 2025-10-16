@@ -20,14 +20,11 @@ update:
     source: https://everythingsmarthome.github.io/everything-presence-one/everything-presence-one-ha-sen0395-nomodule-noble-rev1-6-stable-manifest.json
     disabled_by_default: true
 
-dashboard_import:
-  package_import_url: github://everythingsmarthome/everything-presence-one/everything-presence-one-rev1.6.yaml@main
-  import_full_config: false
-
 packages:
   device_base: !include common/everything-presence-one-base.yaml
   device_version: !include common/everything-presence-one-sen0395-stable.yaml
   sen0395_base: !include common/sen0395-common.yaml
+  mqtt: !include common/mqtt.yaml
 
 binary_sensor:
   - platform: gpio

@@ -1,0 +1,31 @@
+substitutions:
+  name: "pr-02"
+  friendly_name: "Pr2"
+  project_name: "Nemiah.cosmOS"
+  project_version: "1.2.11"
+  temperature_offset: "-3"
+  humidity_offset: "5"
+  temperature_update_interval: "60s"
+  illuminance_update_interval: "2s"
+  hidden_ssid: "false"
+  factory_reset_disabled: "true"
+  uart_target_output_disabled: "true"
+  uart_presence_output_disabled: "true"
+  log_level: "WARN"
+
+
+
+packages:
+  device_base: !include common/everything-presence-one-base.yaml
+  sen0609_base: !include common/sen0609-common.yaml
+  co2_base: !include common/modules/co2-rev1.5.yaml
+  mqtt: !include common/mqtt.yaml
+
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 33
+      mode: INPUT
+    name: PIR
+    id: !extend pir_motion_sensor 
