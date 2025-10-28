@@ -26,6 +26,7 @@ binary_sensor:
       mode: INPUT
     name: PIR
     id: !extend pir_motion_sensor
+
 wifi:
   # Override some wifi params for probe failures; uses same secrets
   fast_connect: false # full scan to find AP if probe is failing
@@ -33,3 +34,34 @@ wifi:
   reboot_timeout: 10min
   enable_rrm: true
   enable_btm: false
+
+sensor:
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 10s
+    entity_category: "diagnostic"
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db
+    name: "WiFi Signal Percent"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "Signal %"
+    entity_category: "diagnostic"
+    device_class: ""
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+      icon: "mdi:ip"
+    ssid:
+      name: "SSID"
+      icon: "mdi:wifi"
+    bssid:
+      name: "BSSID"
+      icon: "mdi:access-point"
+    mac_address:
+      name: "MAC Address"
+      icon: "mdi:network"
